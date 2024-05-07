@@ -15,6 +15,7 @@ $env:vscommunityfile = "vs_WDExpress.exe"
 $env:monafile = "mona.py"
 $env:windbglibfile = "windbglib.py"
 $env:pykdfile = "pykd.zip"
+$env:immunityfile = "immunity.exe"
 
 # helper functions
 
@@ -53,7 +54,9 @@ if (Test-Path $env:tempfolder -PathType Container)
 	Invoke-WebRequest -Uri "https://github.com/corelan/mona/raw/master/mona.py" -OutFile "$env:tempfolder\$env:monafile" *>$null
 	Write-Output "    5. windbglib.py"
 	Invoke-WebRequest -Uri "https://github.com/corelan/windbglib/raw/master/windbglib.py" -OutFile "$env:tempfolder\$env:windbglibfile" *>$null
-	Write-Output "    6. Visual Studio 2017 Desktop Express"
+	Write-Output "    6. Immunity Debugger"
+	Invoke-WebRequest -Uri "https://github.com/corelan/CorelanTraining/raw/master/ImmunityDebugger_1_85_setup.exe" -OutFile "$env:tempfolder\$env:immunityfile" *>$null
+	Write-Output "    7. Visual Studio 2017 Desktop Express"
 	Invoke-WebRequest -Uri "https://aka.ms/vs/15/release/vs_WDExpress.exe" -OutFile "$env:tempfolder\$env:vscommunityfile" *>$null
 
 
@@ -93,8 +96,12 @@ if (Test-Path $env:tempfolder -PathType Container)
 	Copy-Item -Path "$env:tempfolder\$env:monafile" -Destination "C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\"
 	Copy-Item -Path "$env:tempfolder\$env:windbglibfile" -Destination "C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\"
 	Copy-Item -Path "$env:tempfolder\pykd.pyd" -Destination "C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\winext\"
+
+	Write-Output "    6. Immunity Debugger - manual install"
+    Start-Process "$env:tempfolder\$env:immunityfile" -Wait
+	Copy-Item -Path "$env:tempfolder\$env:monafile" -Destination "C:\Program Files (x86)\Immunity Inc\Immunity Debugger\PyCommands"
 	
-	Write-Output "    5. Visual Studio 2017 Desktop Express - manual install"
+	Write-Output "    7. Visual Studio 2017 Desktop Express - manual install"
 	Start-Process "$env:tempfolder\$env:vscommunityfile" -Wait
 
 	Write-Output "[+] Launching WinDBG to check if everything is ok"
