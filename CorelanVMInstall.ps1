@@ -98,7 +98,7 @@ if (Test-Path $env:tempfolder -PathType Container)
 	Copy-Item -Path "$env:tempfolder\pykd.pyd" -Destination "C:\Program Files (x86)\Windows Kits\10\Debuggers\x86\winext\"
 
 	Write-Output "    6. Immunity Debugger - manual install"
-    Start-Process "$env:tempfolder\$env:immunityfile" -Wait
+	Start-Process "$env:tempfolder\$env:immunityfile" -Wait
 	Copy-Item -Path "$env:tempfolder\$env:monafile" -Destination "C:\Program Files (x86)\Immunity Inc\Immunity Debugger\PyCommands"
 	
 	Write-Output "    7. Visual Studio 2017 Desktop Express - manual install"
